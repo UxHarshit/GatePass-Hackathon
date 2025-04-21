@@ -1,0 +1,37 @@
+---
+import PassPage from '@/components/Pass/pass';
+import Layout from '../layouts/Layout.astro';
+import "../styles/global.css";
+const x_email = Astro.cookies.get("x-team-email");
+if (!x_email) {
+	return Astro.redirect("/");
+}
+export const prerender = false;
+
+
+
+const teamDetails = await fetch("https://gateapi.harshitkatheria.live/team", {
+	method: "POST",
+	headers: {
+		"Content-Type": "application/json",
+	},
+	body: JSON.stringify({
+		mail: x_email?.value,
+	}),
+});
+
+const teamDetailsJson = await teamDetails.json();
+
+if(!teamDetailsJson) {
+	Astro.redirect("/");
+}
+
+if (teamDetailsJson.status !== "success") {
+	Astro.redirect("/");
+}
+
+---
+
+<Layout title="Pass - HackLiet">
+	<PassPage client:load teamDetails={teamDetailsJson} />
+</Layout>
