@@ -1,23 +1,85 @@
-import { GlassCard } from "@/components/ui/glass-card"
-import { Button } from "@/components/ui/button"
-import { Check } from "lucide-react"
-import { motion, AnimatePresence } from "framer-motion"
+import { GlassCard } from "@/components/ui/glass-card";
+import { Button } from "@/components/ui/button";
+import { Check, CircleX, Cross } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useState } from "react";
 
 interface TeamMember {
-  id: string
-  name: string
-  role: string
-  isPresent: boolean
+  name: string;
+  ispresent: string;
 }
 
 interface TeamInfoProps {
-  teamName: string
-  leaderName: string
-  members: TeamMember[]
-  onReset: () => void
+  teamId: string;
+  teamName: string;
+  leaderName: string;
+  members: TeamMember[];
+  onReset: () => void;
 }
 
-export function TeamInfo({ teamName, leaderName, members, onReset }: TeamInfoProps) {
+export function TeamInfo({
+  teamId,
+  teamName,
+  leaderName,
+  members,
+  onReset,
+}: TeamInfoProps) {
+  const [memberList, setMemberList] = useState<TeamMember[]>(members);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleMarkPresent = (name: string) => {
+    setMemberList((prevMembers) => {
+      const updatedMembers = prevMembers.map((member) =>
+        member.name === name ? { ...member, ispresent: "true" } : member
+      );
+      updateServerData(updatedMembers);
+      return updatedMembers;
+    });
+  };
+
+  const handleMarkAbsent = (name: string) => {
+    setMemberList((prevMembers) => {
+      const updatedMembers = prevMembers.map((member) =>
+        member.name === name ? { ...member, ispresent: "false" } : member
+      );
+      updateServerData(updatedMembers);
+      return updatedMembers;
+    });
+  };
+
+  const updateServerData = (prevDataState: TeamMember[]) => {
+    setIsLoading(true);
+    fetch("https://gateapi.harshitkatheria.live/present", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        teamId: teamId,
+        teammembers: prevDataState.map((member) => ({
+          name: member.name,
+          ispresent: member.ispresent,
+        })),
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setMemberList(data.teamdata.teammembers);
+      })
+      .catch((error) => {
+        console.error("Error updating server data:", error);
+        setMemberList(prevDataState);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
+
   return (
     <GlassCard className="w-full max-w-md">
       <motion.div
@@ -65,9 +127,9 @@ export function TeamInfo({ teamName, leaderName, members, onReset }: TeamInfoPro
           Team Members
         </motion.h3>
         <div className="space-y-3">
-          {members.map((member, index) => (
+          {memberList.map((member, index) => (
             <motion.div
-              key={member.id}
+              key={member.name}
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.3, delay: 0.3 + index * 0.1 }}
@@ -76,25 +138,39 @@ export function TeamInfo({ teamName, leaderName, members, onReset }: TeamInfoPro
               <div className="text-white">
                 <div className="font-medium">{member.name}</div>
               </div>
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
                 <Button
                   size="sm"
-                  variant={member.isPresent ? "default" : "outline"}
+                  variant={member.ispresent != "true" ? "default" : "default"}
                   className={
-                    member.isPresent
+                    member.ispresent != "true"
                       ? "bg-emerald-700 text-white hover:bg-emerald-800"
-                      : "border-white/10 bg-black/30 text-white hover:bg-white/10 hover:text-white"
+                      : "bg-red-700 text-white hover:bg-red-800"
                   }
-                  onClick={() =>{}}
-                  disabled={member.isPresent}
+                  disabled={isLoading}
                 >
                   <AnimatePresence mode="wait">
-                    {member.isPresent ? (
-                      <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="flex items-center">
-                        <Check className="mr-1 h-4 w-4" /> Present
+                    {member.ispresent == "true" ? (
+                      <motion.div
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        className="flex items-center"
+                        onClick={() => handleMarkAbsent(member.name)}
+                      >
+                        <CircleX className="mr-1 h-4 w-4" /> Mark Absent
                       </motion.div>
                     ) : (
-                      <motion.span>Mark Present</motion.span>
+                      <motion.span
+                        onClick={() => handleMarkPresent(member.name)}
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        className="flex items-center"
+                      >
+                        <Check className="mr-1 h-4 w-4" /> Mark Present
+                      </motion.span>
                     )}
                   </AnimatePresence>
                 </Button>
@@ -104,5 +180,5 @@ export function TeamInfo({ teamName, leaderName, members, onReset }: TeamInfoPro
         </div>
       </div>
     </GlassCard>
-  )
+  );
 }

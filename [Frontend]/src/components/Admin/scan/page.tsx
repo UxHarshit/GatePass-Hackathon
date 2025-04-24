@@ -136,6 +136,7 @@ export default function ScanPage() {
             >
               {teamData ? (
                 <TeamInfo
+                  teamId={teamData.id}
                   teamName={teamData.teamname}
                   leaderName={teamData.leadername}
                   members={teamData.teammembers}

@@ -8,7 +8,14 @@ const fastify = Fastify({ logger: { level: 'info' } });
 
 fastify.register(authRoutes);
 fastify.register(teamRoutes);
-fastify.register(cors);
+fastify.register(cors, {
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    exposedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
+    maxAge: 86400, // 24 hours
+});
 
 
 const start = async () => {
