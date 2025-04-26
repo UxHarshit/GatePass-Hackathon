@@ -58,7 +58,7 @@ export default function LoginForm() {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="text-2xl font-bold text-white"
         >
-          Hackathon Gate Pass
+         HackLIET Hackathon Gate Pass
         </motion.h1>
         <motion.p
           initial={{ opacity: 0 }}
@@ -66,7 +66,7 @@ export default function LoginForm() {
           transition={{ duration: 0.5, delay: 0.3 }}
           className="text-emerald-200/70"
         >
-          Team Leader Login
+          Team Login
         </motion.p>
       </div>
 
@@ -158,7 +158,29 @@ export default function LoginForm() {
             {isLoading ? "Logging in..." : "Login"}
           </Button>
         </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: 0.7 }}
+          >
+            <p className="text-xs text-emerald-200/70">For any issues, contact us on <a className="text-emerald-500">WhatsApp</a> or email us at {" "}
+            <a href="mailto:hexclan@liet.in" className="text-emerald-500">
+              hexclan@liet.in
+            </a></p>
+          </motion.div>
       </form>
+      <footer className="mt-6 text-center text-sm text-emerald-200/70">
+        <p>Made with </p>
+        <motion.p
+          initial={{ scale: 1 }}
+          animate={{ scale: 1.2 }}
+          transition={{ repeat: Infinity, duration: 0.5, ease: "easeInOut" }}
+          className="text-emerald-500"
+        >
+          ❤️
+        </motion.p>
+        <p> by <a href="https://harshitkatheria.engineer" className="text-emerald-500">Harshit Katheria</a></p>
+      </footer>
     </GlassCard>
   );
 }

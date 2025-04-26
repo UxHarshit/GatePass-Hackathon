@@ -71,7 +71,7 @@ export default function PassPage(props: any) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <h1 className="text-2xl font-bold text-white">Team Dashboard</h1>
+        <h1 className="text-2xl font-bold text-white">Team Pass</h1>
         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
           <Button
             variant="outline"

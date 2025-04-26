@@ -153,6 +153,18 @@ export default function QrPage({
           <span>{deskno}</span>
         </div>
       </motion.div>
+      <footer className="mt-6 text-center text-sm text-emerald-200/70">
+        <p>Made with </p>
+        <motion.p
+          initial={{ scale: 1 }}
+          animate={{ scale: 1.2 }}
+          transition={{ repeat: Infinity, duration: 0.5, ease: "easeInOut" }}
+          className="text-emerald-500"
+        >
+          ❤️
+        </motion.p>
+        <p> by <a href="https://harshitkatheria.engineer" className="text-emerald-500">Harshit Katheria</a></p>
+      </footer>
     </GlassCard>
   );
 }
