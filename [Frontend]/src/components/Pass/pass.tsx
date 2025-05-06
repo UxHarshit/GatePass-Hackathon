@@ -3,6 +3,7 @@ import {Button} from "@/components/ui/button";
 import {LogOut} from "lucide-react";
 import {useEffect} from "react";
 import QrPage from "./QrPage";
+import { HackathonTimer } from "./Timer";
 
 export default function PassPage(props: any) {
 
@@ -14,6 +15,15 @@ export default function PassPage(props: any) {
   }, []);
 
 
+  // const hackathonStartDate = new Date(Date.now() + 2 * 24 * 60 * 60 * 1000) // 2 days from now
+  // const hackathonEndDate = new Date(Date.now() + 5 * 24 * 60 * 60 * 1000) // 5 days from now
+
+  // test
+  // const hackathonStartDate = new Date(Date.now() - 1 * 24 * 60 * 60 * 1000) // 1 day ago
+  // const hackathonEndDate = new Date(Date.now() + 1 * 60 * 1000) // 1 minute from now
+
+  const hackathonStartDate = new Date("2025-05-09T09:00:00");
+  const hackathonEndDate = new Date("2025-05-10T16:00:00");
 
   const handleLogout = () => {
     localStorage.removeItem("x-team-email");
@@ -85,7 +95,8 @@ export default function PassPage(props: any) {
         </motion.div>
       </motion.div>
 
-      <div className="relative z-10">
+      <div className="relative z-10 space-y-6">
+        <HackathonTimer startDate={hackathonStartDate} endDate={hackathonEndDate}/>
         <QrPage props={props} />
       </div>
     </div>
