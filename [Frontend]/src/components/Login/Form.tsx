@@ -130,7 +130,7 @@ export default function LoginForm() {
             </button>
           </motion.div>
           <p className="text-xs text-emerald-200/70">
-            Password format: TeamName first 4 letters + Leader Name's first 4
+            Password format: TeamName first 2 letters + Leader Name's first 2
             letters + Team Leader's phone number last 4 digits.
             <br /> Example: teamname + leadername + 1234 = teamlead1234
           </p>

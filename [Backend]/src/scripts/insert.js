@@ -29,12 +29,20 @@ async function insertData() {
 
         teammembers.push({ name: leadername, ispresent: true });
 
-        const numMembers = 0;
+        const numMembers = await ask("Enter number of team members: ");
+
+        if (isNaN(numMembers) || numMembers < 2) {
+            console.log("Invalid number of team members. Please enter a valid number.");
+            rl.close();
+            return;
+        }
 
         for (let i = 0; i < numMembers; i++) {
             const memberName = await ask(`Enter name of team member ${i + 1}: `);
-            const isPresent = await ask(`Is ${memberName} present? (y/n): `);
-            teammembers.push({ name: memberName, ispresent: isPresent === 'y' });
+            // const isPresent = await ask(`Is ${memberName} present? (y/n): `);
+            const isPresent = false;
+            // teammembers.push({ name: memberName, ispresent: isPresent === 'y' });
+            teammembers.push({ name: memberName, ispresent: isPresent });
         }
 
         await Teams.create({
@@ -48,9 +56,9 @@ async function insertData() {
 
         console.log("New team created successfully");
 
-        console.log("User email:", leaderemail);
-        console.log("User Pass",teamname.trim().slice(0, 4).toLowerCase() + leadername.slice(0, 4).toLowerCase() + leaderphone.slice(-4).toLowerCase());
-
+        const password = teamname.trim().slice(0, 2).toLowerCase() + leadername.slice(0, 2).toLowerCase() + leaderphone.slice(-4).toLowerCase();
+        console.log("Team name: " + teamname + " and email: " + leaderemail);
+        console.log("Generated password for the team:", password);
     } catch (error) {
         console.error("Error inserting data:", error);
     } finally {
