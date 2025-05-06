@@ -1,8 +1,12 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import LoginForm from "./Form";
+import { HackathonTimer } from "../Pass/Timer";
 
 export default function LoginPage() {
+  const hackathonStartDate = new Date("2025-05-09T09:00:00");
+  const hackathonEndDate = new Date("2025-05-10T16:00:00");
+
   return (
     <>
       <div className="relative flex min-h-screen w-full flex-col items-center justify-center bg-gradient-to-br from-gray-900 via-slate-900 to-gray-900 p-4 overflow-hidden">
@@ -47,7 +51,8 @@ export default function LoginPage() {
           />
         </div>
 
-        <div className="relative z-10">
+        <div className="relative z-10 space-y-6">
+          <HackathonTimer startDate={hackathonStartDate} endDate={hackathonEndDate} />
             <LoginForm/>
         </div>
       </div>
