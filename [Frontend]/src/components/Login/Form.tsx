@@ -58,7 +58,7 @@ export default function LoginForm() {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="text-2xl font-bold text-white"
         >
-         HackLIET Hackathon Gate Pass
+         HackIndia Hackathon Gate Pass
         </motion.h1>
         <motion.p
           initial={{ opacity: 0 }}
@@ -163,7 +163,7 @@ export default function LoginForm() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 0.7 }}
           >
-            <p className="text-xs text-emerald-200/70">For any issues, contact us on <a className="text-emerald-500">WhatsApp</a> or email us at {" "}
+            <p className="text-xs text-emerald-200/70">For any issues, contact us on <a href="https://chat.whatsapp.com/F7YxFuUGcC108KKOy1PxHF" className="text-emerald-500">WhatsApp</a> or email us at {" "}
             <a href="mailto:hexclan@liet.in" className="text-emerald-500">
               hexclan@liet.in
             </a></p>
