@@ -174,7 +174,7 @@ export default function LoginForm() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 0.8 }}
         >
-          <p className="text-xs text-emerald-200/70">Contact: +91 7906066985</p>
+          <p className="text-xs text-emerald-200/70">Contact: +91 <a href="tel:7906066985" className="text-emerald-500">7906066985</a></p>
         </motion.div>
       </form>
       <footer className="mt-6 text-center text-sm text-emerald-200/70">
