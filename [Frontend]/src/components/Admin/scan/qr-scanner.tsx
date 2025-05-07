@@ -249,6 +249,20 @@ export function QRScanner({ onScanSuccess }: QRScannerProps) {
           </motion.div>
         )}
       </motion.div>
+      <motion.div
+        className="mt-4 text-center text-sm text-emerald-200/70"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.6 }}
+      >
+        <p>
+          Ensure the QR code is well-lit and within the frame for best results.
+        </p>
+        <p>
+          If you encounter issues, try switching the camera or adjusting the
+          distance.
+        </p>
+      </motion.div>
     </GlassCard>
   );
 }
