@@ -187,7 +187,7 @@ export default function LoginForm() {
         >
           ❤️
         </motion.p>
-        <p> by <a href="https://harshitkatheria.engineer" className="text-emerald-500">Harshit Katheria</a></p>
+        <p> by <a href="" className="text-emerald-500">HexClan</a></p>
       </footer>
     </GlassCard>
   );
