@@ -8,7 +8,7 @@ async function authRoutes(fastify, options) {
             return reply.status(400).send({ message: "Email and password are required" });
         }
         try {
-            const team = await models.Teams.findOne({ where: { leaderemail: email } });
+            const team = await models.Teams.findOne({ where: { leaderemail: email.toLowerCase() } });
             if (!team) {
                 return reply.status(401).send({ message: "Invalid email or password" });
             }
