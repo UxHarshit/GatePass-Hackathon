@@ -13,11 +13,13 @@ async function authRoutes(fastify, options) {
                 return reply.status(401).send({ message: "Invalid email or password" });
             }
 
+            var lowPassword = password.toLowerCase();
+
             const teamnamePart = team.teamname.slice(0, 2).toLowerCase();
             const teamLeaderPart = team.leadername.slice(0, 2).toLowerCase();
             const passwordPart = team.leaderphone.slice(-4).toLowerCase();
             const expectedPassword = `${teamnamePart}${teamLeaderPart}${passwordPart}`;
-            if (expectedPassword != password) {
+            if (expectedPassword != lowPassword) {
                 return reply.status(401).send({ message: "Invalid email or password" });
             }
             return reply.status(200).send({ message: "Login successful", team });
