@@ -6,7 +6,7 @@ async function teamRoutes(fastify, options) {
         try {
             const { mail } = request.body;
             console.log(request.body);
-            const team = await models.Teams.findOne({ where: { leaderemail: mail } });
+            const team = await models.Teams.findOne({ where: { leaderemail: mail.toLowerCase() } });
             if (!team) {
                 return reply.status(404).send({ error: 'Team not found' });
             }
