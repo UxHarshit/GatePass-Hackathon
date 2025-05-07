@@ -2,11 +2,15 @@ import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import { LogOut } from "lucide-react";
 import { QRScanner } from "./qr-scanner";
-import { useEffect, useRef, useState } from "react";
+import { use, useEffect, useRef, useState } from "react";
 import { Html5Qrcode } from "html5-qrcode";
 import { TeamInfo } from "./teaminfo";
 
 export default function ScanPage() {
+
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+
   const handleLogout = () => {
     localStorage.removeItem("x-team-email");
     document.cookie =
@@ -53,6 +57,31 @@ export default function ScanPage() {
         setTeamData(null);
       });
   };
+  useEffect(() => {
+    const checkAuthentication = () => {
+      const key = prompt("Enter the authentication key:");
+      const bEncodedKey = btoa(key || "");
+      if (bEncodedKey === "Z3Bhc3NsaWV0") {
+        setIsAuthenticated(true);
+      } else {
+        alert("Invalid key. Please try again.");
+        setIsAuthenticated(false);
+      }
+    };
+
+    checkAuthentication();
+  }, []);
+
+
+  if(!isAuthenticated) {
+    return (
+      <div className="flex h-screen w-full items-center justify-center bg-gradient-to-br from-gray-900 via-slate-900 to-gray-900">
+        <div className="text-white">You are not authenticated. Please login.</div>
+      </div>
+    );
+  }
+
+
   return (
     <div className="relative flex min-h-screen w-full flex-col items-center bg-gradient-to-br from-gray-900 via-slate-900 to-gray-900 p-4 overflow-hidden">
       <div className="absolute inset-0 z-0">
